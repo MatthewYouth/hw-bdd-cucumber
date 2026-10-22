@@ -36,12 +36,12 @@ Feature: display list of movies filtered by MPAA rating
       | The Incredibles         | PG     | 5-Nov-2004   |
       | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
       | Chicken Run             | G      | 21-Jun-2000  |
-    And I am on the RottenPotatoes home page     # features/step_definitions/web_steps.rb:44
+    And I am on the RottenPotatoes home page     # features/step_definitions/web_steps.rb:50
     Then 10 seed movies should exist             # features/step_definitions/movie_steps.rb:11
 
   Scenario: restrict to movies with "PG" or "R" ratings # features/filter_movie_list.feature:25
     When I check the following ratings: PG, R           # features/step_definitions/movie_steps.rb:28
-    Then complete the rest of of this scenario          # features/step_definitions/movie_steps.rb:60
+    Then complete the rest of of this scenario          # features/step_definitions/debugging_utils.rb:25
     # enter step(s) to check the "PG" and "R" checkboxes
     # enter step(s) to uncheck all other checkboxes
     # enter step to "submit" the search form on the homepage
@@ -49,7 +49,7 @@ Feature: display list of movies filtered by MPAA rating
     # enter step(s) to ensure that other movies are not visible
   Scenario: all ratings selected               # features/filter_movie_list.feature:34
     # your steps here
-    Then complete the rest of of this scenario # features/step_definitions/movie_steps.rb:60
+    Then complete the rest of of this scenario # features/step_definitions/debugging_utils.rb:25
 
 Feature: display list of movies sorted by different criteria
   As an avid moviegoer
@@ -69,16 +69,16 @@ Feature: display list of movies sorted by different criteria
       | The Incredibles         | PG     | 5-Nov-2004   |
       | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
       | Chicken Run             | G      | 21-Jun-2000  |
-    And I am on the RottenPotatoes home page     # features/step_definitions/web_steps.rb:44
+    And I am on the RottenPotatoes home page     # features/step_definitions/web_steps.rb:50
     Then 10 seed movies should exist             # features/step_definitions/movie_steps.rb:11
 
   Scenario: sort movies alphabetically         # features/sort_movie_list.feature:25
     When I select "Title" from "sort_by"       # features/step_definitions/web_steps.rb:85
-    Then complete the rest of of this scenario # features/step_definitions/movie_steps.rb:60
+    Then complete the rest of of this scenario # features/step_definitions/debugging_utils.rb:25
 
   Scenario: sort movies in increasing order of release date # features/sort_movie_list.feature:30
     When I select "Release date" from "sort_by"             # features/step_definitions/web_steps.rb:85
-    Then complete the rest of of this scenario              # features/step_definitions/movie_steps.rb:60
+    Then complete the rest of of this scenario              # features/step_definitions/debugging_utils.rb:25
 
 4 scenarios (4 pending)
 19 steps (15 skipped, 4 pending)

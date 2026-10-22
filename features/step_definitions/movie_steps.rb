@@ -41,25 +41,3 @@ Then(/^I should see all the movies$/) do
   # Make sure that all the movies in the app are visible in the table
   pending "Fill in this step in movie_steps.rb"
 end
-
-### Utility Steps Just for this assignment.
-
-Then(/^debug$/) do
-  # Use this to write "Then debug" in your scenario to open a console.
-  require "byebug"
-  byebug
-  1 # intentionally force debugger context in this method
-end
-
-Then(/^debug javascript$/) do
-  # Use this to write "Then debug" in your scenario to open a JS console
-  page.driver.debugger
-  1
-end
-
-Then(/complete the rest of of this scenario/) do
-  # This shows you what a basic cucumber scenario looks like.
-  # You should leave this block inside movie_steps, but replace
-  # the line in your scenarios with the appropriate steps.
-  raise "Remove this step from your .feature files"
-end
