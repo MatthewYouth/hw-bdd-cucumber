@@ -1,43 +1,47 @@
-# Add a declarative step here for populating the DB with movies.
-
-Given(/the following movies exist/) do |movies_table|
+Given(/^the following movies exist:$/) do |movies_table|
   movies_table.hashes.each do |movie|
-    # each returned element will be a hash whose key is the table header.
-    # you should arrange to add that movie to the database here.
+    Movie.create!(movie)
   end
-  pending "Fill in this step in movie_steps.rb"
 end
 
-Then(/(.*) seed movies should exist/) do |n_seeds|
+Then(/^(\d+) seed movies should exist$/) do |n_seeds|
   expect(Movie.count).to eq n_seeds.to_i
 end
 
-# Make sure that one string (regexp) occurs before or after another one
-#   on the same page
+Then(/^I should see "(.*)" before "(.*)" in the movie list$/) do |first_title, second_title|
+  titles = all('#movies > div[id^="movie_"] > p:first-child').map do |element|
+    element.text.sub(/\ATitle:\s*/, '').strip
+  end
 
-Then(/^I should see "(.*)" before "(.*)" in the movie list$/) do |e1, e2|
-  #  ensure that that e1 occurs before e2.
-  #  page.body is the entire content of the page as a string.
-  pending "Fill in this step in movie_steps.rb"
+  # Verify both titles exist before comparing their positions.
+  expect(titles).to include(first_title, second_title)
+  expect(titles.index(first_title)).to be < titles.index(second_title)
 end
 
-
-# Make it easier to express checking or unchecking several boxes at once
-#  "When I check only the following ratings: PG, G, R"
-
-When(/I check the following ratings: (.*)/) do |rating_list|
-  # HINT: use String#split to split up the rating_list, then
-  #   iterate over the ratings and reuse the "When I check..." or
-  #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
-  pending "Fill in this step in movie_steps.rb"
+When(/^I check the following ratings: (.*)$/) do |rating_list|
+  rating_list.split(',').map(&:strip).each do |rating|
+    check(rating)
+  end
 end
 
 Then(/^I should (not )?see the following movies: (.*)$/) do |no, movie_list|
-  # Take a look at web_steps.rb Then /^(?:|I )should see "([^"]*)"$/
-  pending "Fill in this step in movie_steps.rb"
+  within('#movies') do
+    movie_list.split(',').map(&:strip).each do |title|
+      if no
+        expect(page).not_to have_content(title)
+      else
+        expect(page).to have_content(title)
+      end
+    end
+  end
 end
 
 Then(/^I should see all the movies$/) do
-  # Make sure that all the movies in the app are visible in the table
-  pending "Fill in this step in movie_steps.rb"
+  # The index renders one movie partial per div, rather than table rows.
+  expect(page).to have_css('#movies > div[id^="movie_"]', count: Movie.count)
+  within('#movies') do
+    Movie.pluck(:title).each do |title|
+      expect(page).to have_content(title)
+    end
+  end
 end
